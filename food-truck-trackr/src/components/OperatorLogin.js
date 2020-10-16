@@ -1,39 +1,75 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import * as yup from 'yup';
+import { useFormik } from 'formik';
+import axios from 'axios';
+
 
 const  OperatorLogin = () => {
-    const [login, setLogin] = useState({
-        username: '',
-        password: ''
+    const formik = useFormik({
+        initialValues: {
+            username: '',
+            password: ''
+        },
+        validationSchema: yup.object({
+            username: yup
+                .string()
+                .required('Please enter your username!')
+                .label('Username'),
+            password: yup
+                .string()
+                .required('Please enter your password!')
+                .label('Password')
+        }),
+        onSubmit: (values) => {
+            console.log('sg: operatorlogin.js : OperatorLogin :  : value', values)
+        }
     })
-
-    const handleChanges = (e) => {
-        setLogin({
-            ...login,
-            [e.target.name] : e.target.value
-        })
-    }
-
-    const handleSubmit = (e) => {
-            e.preventDefault();
-            console.log(login)
-    }
 
     return(
         <div>
             <h2>Operator Login</h2>
             <p>Welcome back! Please login to continue.</p>
-            <form>
-                <label>username:
-                    <input type='username' name='username' value={login.username} onChange={handleChanges}/>
+            <form onSubmit={formik.handleSubmit}>
+                <label>Username:&nbsp;&nbsp;
+                    <input 
+                        type='username' 
+                        name='username' 
+                        value={formik.values.username} 
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                    />
                 </label>
-                <label>password:
-                    <input name='password' type='password' value={login.password} onChange={handleChanges}/>
+                {
+                formik.errors.username 
+                    ? <span>{formik.errors.username}</span>
+                    : null 
+                }
+                <br />
+                <label>Password:&nbsp;&nbsp;
+                    <input 
+                        name='password' 
+                        type='password' 
+                        value={formik.password} 
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur} 
+                    />
                 </label>
-                <button>Login</button>
-{/*             <label>re-enter password:
-                    <input name='retype_password' type='password' name=''/>
-                </label> */}
-                
+                {
+                formik.errors.password 
+                    ? <span>{formik.errors.password}</span>
+                    : null 
+                }
+                <br />
+                <button 
+                    type='submit'
+                    disabled={
+                        formik.isValid && formik.values !== formik.initialValues 
+                            ? false 
+                            : true
+                    } 
+                >
+                    Login
+                </button>
             </form>
         </div>
         )

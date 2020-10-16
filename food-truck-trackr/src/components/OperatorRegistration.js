@@ -1,51 +1,127 @@
-import React, {useState} from 'react';
+import React from 'react';
+import  * as yup from 'yup';
+import { useFormik } from 'formik';
 
 const  OperatorRegistration = () => {
-    const [newOperator, setNewOperator] = useState({
-        id: '',
-        username: '',
-        password: '',
-        email: '',
-        first_name: '',
-        last_name: ''
+    const formik = useFormik({
+        initialValues: {
+            id: '',
+            username: '',
+            password: '',
+            email: '',
+            first_name: '',
+            last_name: ''
+        },
+        validationSchema: yup.object({
+            username: yup
+                .string()
+                .required()
+                .min(6, 'Your username must be at least 6 characters!'),
+            password: yup
+                .string()
+                .required()
+                .min(6, 'Your password must be at least 8 characters!'),
+            email: yup
+                .string()
+                .required()
+                .email(),
+            first_name: yup
+                .string()
+                .required()
+                .min(2, 'This must be at least 2 characters.'),
+            last_name: yup
+                .string()
+                .required()
+                .min(2, 'This must be at least 2 characters.'),
+        }),
+        onSubmit: values => {
+            console.log('sg: operatorregistration.js: OperatorRegistration: formik : onSubmit : values =', values)
+        }
     })
-
-    const handleChanges = (e) => {
-        setNewOperator({
-            ...newOperator,
-            [e.target.name] : e.target.value
-        })
-    }
-
-    const handleSubmit = (e) => {
-            e.preventDefault();
-            console.log(newOperator)
-    }
 
     return(
         <div>
             <h2>Operator Registration</h2>
             <p>Thank you for your interest in joining Food Truck Trackr! Please enter the following information to register.</p>
-            <form>
-                <label>username:
-                    <input name='username' type='text' value={newOperator.username} onChange={handleChanges}/>
+            <form onSubmit = {formik.handleSubmit}>
+                <label>Username:
+                    <input 
+                        name='username' 
+                        type='text' 
+                        value={formik.values.username} 
+                        onChange={formik.handleChange} 
+                        onBlur={formik.handleBlur} 
+                    />
                 </label>
-                <label>password:
-                    <input name='password' type='password' value={newOperator.password} onChange={handleChanges}/>
+                {formik.errors.username
+                    ? <span>{formik.errors.username}</span>
+                    : null
+                }
+                <label>Password:
+                    <input 
+                        name='password' 
+                        type='password' 
+                        value={formik.values.password} 
+                        onChange={formik.handleChange}                        
+                        onBlur={formik.handleBlur} 
+                    />
                 </label>
-                <label>email:
-                    <input name='email' type='email' value={newOperator.email} onChange={handleChanges}/>
+                {formik.errors.password
+                    ? <span>{formik.errors.password}</span>
+                    : null
+                }
+                <label>Email:
+                    <input 
+                        name='email' 
+                        type='email' 
+                        value={formik.values.email} 
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur} 
+                    />
                 </label>
-                <label>first name:
-                    <input name='first_name' type='text' value={newOperator.first_name} onChange={handleChanges}/>
+                {formik.errors.email
+                    ? <span>{formik.errors.email}</span>
+                    : null
+                }
+                <label>Firstname:
+                    <input 
+                        name='first_name' 
+                        type='text' 
+                        value={formik.values.first_name}
+                        onChange={formik.handleChange} 
+                        onBlur={formik.handleBlur} 
+                    />
                 </label>
-                <label>last name:
-                    <input name='last_name' type='text' value={newOperator.last_name} onChange={handleChanges}/>
+                {formik.errors.first_name
+                    ? <span>{formik.errors.first_name}</span>
+                    : null
+                }
+                <label>Lastname:
+                    <input 
+                        name='last_name'
+                        type='text'
+                        value={formik.values.last_name}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur} 
+                    />
                 </label>
+                {formik.errors.last_name
+                    ? <span>{formik.errors.last_name}</span>
+                    : null
+                }
 {/*             <label>I have read and agree to the Terms and Conditions: 
                     <input name='terms' type='checkbox' />
                 </label> */}
-                <button>Register</button>
+                <button 
+                    type='submit'
+                    disabled= {
+                        formik.isValid && formik.values !== formik.initialValues
+                            ? false
+                            : true
+                    }
+                >
+                    Register
+                </button>
             </form>
         </div>
         )
