@@ -1,6 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import OperatorLogin from './components/OperatorLogin';
+import OperatorRegistration from './components/OperatorRegistration';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           Learn React
         </a>
       </header>
+      <OperatorLogin />
+      <OperatorRegistration />
     </div>
   );
 }
