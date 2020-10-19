@@ -1,6 +1,8 @@
 import React from 'react';
 import  * as yup from 'yup';
 import { useFormik } from 'formik';
+import axios from 'axios';
+import './form-styles.css';
 
 const  OperatorRegistration = () => {
     const formik = useFormik({
@@ -16,26 +18,37 @@ const  OperatorRegistration = () => {
             username: yup
                 .string()
                 .required()
-                .min(6, 'Your username must be at least 6 characters!'),
+                .min(6, 'Your username must be at least 6 characters!')
+                .label('Username'),
             password: yup
                 .string()
                 .required()
-                .min(6, 'Your password must be at least 8 characters!'),
+                .min(6, 'Your password must be at least 8 characters!')
+                .label('Password'),
             email: yup
                 .string()
                 .required()
-                .email(),
+                .email()
+                .label('Email'),
             first_name: yup
                 .string()
                 .required()
-                .min(2, 'This must be at least 2 characters.'),
+                .min(2, 'This must be at least 2 characters.')
+                .label('First name'),
             last_name: yup
                 .string()
                 .required()
-                .min(2, 'This must be at least 2 characters.'),
+                .min(2, 'This must be at least 2 characters.')
+                .label('Last name'),
         }),
         onSubmit: values => {
-            console.log('sg: operatorregistration.js: OperatorRegistration: formik : onSubmit : values =', values)
+            axios.post('https://reqres.in/api/register', values)
+                .then(res => {
+                    console.log('sg: operatorregistration.js: formik submit: AXIOS SUCESS: ', res)
+                })
+                .catch(err => {
+                    console.error('There was an error registering: ', err)
+                })
         }
     })
 

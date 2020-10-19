@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import axios from 'axios';
+import './form-styles.css';
+
 
 
 const  OperatorLogin = () => {
@@ -21,7 +23,15 @@ const  OperatorLogin = () => {
                 .label('Password')
         }),
         onSubmit: (values) => {
-            console.log('sg: operatorlogin.js : OperatorLogin :  : value', values)
+            axios.post('https://reqres.in/api/login', values)
+                .then(res => {
+                    console.log('sg: operatorlogin.js : OperatorLogin : axios SUCESS : res', res)
+                    localStorage.setItem('token', res.data.token)
+                    /* send to diner's profile page? */
+                })
+                .catch(err => {
+                    console.error('There was an error logging in: ', err)
+                })
         }
     })
 
@@ -30,7 +40,7 @@ const  OperatorLogin = () => {
             <h2>Operator Login</h2>
             <p>Welcome back! Please login to continue.</p>
             <form onSubmit={formik.handleSubmit}>
-                <label>Username:&nbsp;&nbsp;
+                <label>Username:
                     <input 
                         type='username' 
                         name='username' 
@@ -44,8 +54,7 @@ const  OperatorLogin = () => {
                     ? <span>{formik.errors.username}</span>
                     : null 
                 }
-                <br />
-                <label>Password:&nbsp;&nbsp;
+                <label>Password:
                     <input 
                         name='password' 
                         type='password' 
@@ -59,7 +68,6 @@ const  OperatorLogin = () => {
                     ? <span>{formik.errors.password}</span>
                     : null 
                 }
-                <br />
                 <button 
                     type='submit'
                     disabled={
