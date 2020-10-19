@@ -1,94 +1,3 @@
-// // libraries
-// import React from "react";
-// import { connect } from "react-redux";
-// import { login } from "./../../store/authentication/";
-// import { withFormik, Form, Field } from "formik";
-// import axiosWithAuth from "./../../utils/AxiosWithAuth";
-// import * as yup from "yup";
-// import { Link } from "react-router-dom";
-
-// const LoginForm = ({ errors, touched, ...props }) => {
-//   return (
-//     <div className="login-form">
-//       <Form className="form">
-//         <Field
-//           className="field"
-//           type="text"
-//           name="username"
-//           placeholder="username"
-//         />
-//         {touched.username && errors.username && (
-//           <p className="errors">{errors.username}</p>
-//         )}
-
-//         <Field
-//           className="field"
-//           type="password"
-//           name="password"
-//           placeholder="password"
-//         />
-//         {touched.password && errors.password && (
-//           <p className="errors">{errors.password}</p>
-//         )}
-
-//         <button type="submit">Login</button>
-//         {/* if userName is not registered
-//       return ALERT - user not found, please register to Login
-//       and return user to registration page on alert message accept */}
-
-//         <Link className="clickToRegister" to="/Registration">
-//           Click here to register as a new user.
-//         </Link>
-//       </Form>
-//     </div>
-//   );
-// };
-
-// const FormikLogin = withFormik({
-//   mapPropsToValues({ username, password, ...props }) {
-//     return {
-//       username: username || "",
-//       password: password || ""
-//     };
-//   },
-
-//   validationSchema: yup.object().shape({
-//     username: yup
-//       .string()
-//       //.label('username')
-//       .required("Username is required!"),
-//     password: yup
-//       .string()
-//       //.label('password')
-//       .required("Password is required!")
-//   }),
-
-//   handleSubmit(values, { props }) {
-//     axiosWithAuth()
-//       .post("https://food-truck-trakr.herokuapp.com/api/login", values)
-//       .then(response => {
-//         localStorage.setItem("token", response.data.token);
-//         console.log(response.data.role);
-//         props.login(response.data.role);
-//         if (response.data.role === "diner") {
-//           props.history.push("/dinerdash");
-//         } else if (response.data.role === "operator") {
-//           props.history.push("/operatordash");
-//         }
-//       })
-//       .catch(err => console.log(err.response));
-//   }
-// })(LoginForm);
-
-// const mapStateToProps = state => {
-//   return {
-//     isAuthenticated: state.auth.isAuthenticated
-//   };
-// };
-
-// export default connect(mapStateToProps, { login })(FormikLogin);
-
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import * as yup from "yup";
@@ -138,41 +47,39 @@ const PrettyLoginForm = styled.form`
 
 
 const Login = () => {
-  const defaultRegistration = {
+  const defaultLogin = {
     id: "",
-    firstName: "",
-    lastName: "",
-    email: "",
     username: "",
     password: "",
   };
 
   const schema = yup.object().shape({
-    username: yup.string().min(2).required("enter your username"),
-    tel: yup
+    username: yup.string().min(2).required("Enter your username."),
+    password: yup
       .string()
       .min(8)
       .required("enter a password with 8 characters minimum length"),
   });
 
-  const [registration, setRegistration] = useState(defaultRegistration);
+
+
+
+
+
+  const [login, setLogin] = useState(defaultLogin);
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [errors, setErrors] = useState({
-    ...defaultRegistration,
-    id: "",
-    firstName: "",
-    lastName: "",
-    email: "",
+    ...defaultLogin,
     username: "",
     password: "",
   
   });
 
   useEffect(() => {
-    schema.isValid(registration).then((valid) => {
+    schema.isValid(login).then((valid) => {
       setButtonDisabled(!valid);
     });
-  }, [registration]);
+  }, [login]);
 
   const validate = (e) => {
     e.persist();
@@ -189,17 +96,17 @@ const Login = () => {
   const handleChange = (e) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
-    setRegistration({ ...registration, [e.target.name]: value });
+    setLogin({ ...login, [e.target.name]: value });
     validate(e);
   };
 
-  const addRegistration = (e) => {
+  const LogIn = (e) => {
     e.preventDefault();
-    setRegistration(defaultRegistration);
+    setLogin(defaultLogin);
     axios
-      .post("https://reqres.in/api/users", registration)
+      .post("https://reqres.in/api/users", login)
       .then((response) => {
-        //not sure what goes here
+        console.log(response)
       })
       .catch((err) => console.log(err));
   };
@@ -208,114 +115,56 @@ const Login = () => {
   return (
     <div>
       <PrettyLoginForm
-        onSubmit={(e) => {
-        addRegistration(e);
-        }}
+      onSubmit={(e) => {
+      LogIn(e);
+      }}
       >
-        <h3>Register To Find An awesome Food Truck</h3>
-        <label htmlFor="firstName">
-          First Name:
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            placeholder="Enter Your First Name"
-            data-cy="firstName"
-            value={registration.firstName || ""}
-            onChange={handleChange}
-          />
-        </label>
-        <p style={{ color: "red", fontSize: ".8rem" }}>{errors.firstName}</p>
-
-        <label htmlFor="lastName">
-          Last Name:
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            placeholder="Enter Your Last Name"
-            data-cy="lastName"
-            value={registration.lastName || ""}
-            onChange={handleChange}
-          />
-        </label>
-        <p style={{ color: "red", fontSize: ".8rem" }}>{errors.lastName}</p>
-
-
-        <label htmlFor="email">
-          Email:
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Enter your email address"
-            data-cy="email"
-            value={registration.email || ""}
-            onChange={handleChange}
-          />
-        </label>
-        <p style={{ color: "red", fontSize: ".8rem" }}>{errors.email}</p>
-
-
+        <h3>Log In to Find an Awesome Food Truck!</h3>
         <label htmlFor="username">
-          Name:
+          Username:
           <input
             type="text"
             id="username"
             name="username"
-            placeholder="Enter your username"
+            placeholder="username"
             data-cy="username"
-            value={registration.username || ""}
+            value={login.username || ""}
             onChange={handleChange}
           />
         </label>
         <p style={{ color: "red", fontSize: ".8rem" }}>{errors.username}</p>
 
-
-        
+      
         <label htmlFor="password">
           Password:
           <input
             type="password"
             id="password"
             name="password"
-            placeholder="Set a password with 8 characters or more"
+            placeholder="password"
             data-cy="password"
-            value={registration.password || ""}
+            value={login.password || ""}
             onChange={handleChange}
           />
         </label>
         <p style={{ color: "red", fontSize: ".8rem" }}>{errors.password}</p>
 
         
-        <label htmlFor="termsAndConditions">
-            <input
-              type="checkbox"
-              name="termsAndConditions"
-              checked={registration.termsAndConditions}
-              value={registration.termsAndConditions}
-              data-cy="termsAndConditions"
-              onChange={handleChange}
-            />
-            I have read the Terms and Conditions
-        </label>
-          <p style={{ color: "red", fontSize: ".8rem" }}>
-            {errors.termsAndConditions}
-          </p>
+        
           
         <button
           type="submit"
           name="submit"
-          className="Order__Button"
+          className="Login__Button"
           disabled={buttonDisabled}
           data-cy="submit"
         >
-         Sign Up!
+        Log In!
         </button>
       </PrettyLoginForm>
       
       </div>
   );
-};
+}
 
 export default Login;

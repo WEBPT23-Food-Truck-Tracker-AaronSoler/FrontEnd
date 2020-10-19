@@ -1,65 +1,39 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
-const HomeDiv = styled.div`
-  background-image: url("src/images/lightBlueFoodTruck.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100vh;
-  width: 100%;
-`;
 
-const ImageBackground = styled.div`
-    vertical-align: top;
-    display: block;
-    width: 100vw;
-`
-
-const Title = styled.h3`
-  color: white;
-  text-shadow: 1px 1px black;
-  font-size: 2rem;
-  margin: auto auto;
-  padding-top: 100px;
-`;
-
-const LoginButton = styled.button`
+const PrettyWelcome = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-center;
+  text-align: center;
+  margin: 0 auto;
   padding: 10px;
-  background-color: green;
-  color: white;
-  font-size: 1.5rem;
-  margin-top: 20px;
   border-radius: 20px;
-  :hover {
-    background-color: white;
-    color: green;
+  border: 4px dashed black;
+  width: 550px;
+  background-color: yellow;
+  p {
+    margin: 10px auto;
   }
+  h3 {
+    margin: 20px auto;
+  }
+
+  
+  
 `;
 
-const SignUpButton = styled.button`
-  padding: 10px;
-  background-color: green;
-  color: white;
-  font-size: 1.5rem;
-  margin-top: 20px;
-  border-radius: 20px;
-  :hover {
-    background-color: white;
-    color: green;
-  }
-`;
 
-const Welcome = () => {
-  return (
-    <HomeDiv>
-      <Title>Find Your Favorite Food Truck!</Title>
-      <NavLink to="/login">
-        <LoginButton data-cy="loginButton">Log In</LoginButton>
-        <SignUpButton data-cy="SignUpButton">New Diner? Sign Up!</SignUpButton>
-      </NavLink>
-    </HomeDiv>
-  );
-};
+function Welcome() {
+    return (
+      <div className="Welcome">
+        <PrettyWelcome>
+            WELCOME TO THE food truck JUNGLE ! <br /> <br />This will be removed.
+        </PrettyWelcome>
+         
+      </div>
+    )
+}
 
 export default Welcome;

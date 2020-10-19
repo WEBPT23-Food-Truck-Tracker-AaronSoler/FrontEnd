@@ -54,14 +54,19 @@ const Registration = () => {
     email: "",
     username: "",
     password: "",
+    termsAndConditions: false,
   };
 
   const schema = yup.object().shape({
-    username: yup.string().min(2).required("enter your username"),
-    tel: yup
+    first_name: yup.string().min(2).required("Enter your first name."),
+    last_name: yup.string().min(2).required("Enter your last name."),
+    email: yup.string().email().required("Enter your email address."),
+    username: yup.string().min(6).required("Create a username with at least 6 characters."),
+    password: yup
       .string()
       .min(8)
       .required("enter a password with 8 characters minimum length"),
+    termsAndConditions: yup.boolean().oneOf([true]),
   });
 
   const [registration, setRegistration] = useState(defaultRegistration);
@@ -69,11 +74,12 @@ const Registration = () => {
   const [errors, setErrors] = useState({
     ...defaultRegistration,
     id: "",
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     email: "",
     username: "",
     password: "",
+    termsAndConditions: false,
   
   });
 
@@ -88,7 +94,7 @@ const Registration = () => {
 
     yup
       .reach(schema, e.target.name)
-      .validate(e.target.value)
+      .validate(e.target.type === "checkbox" ? e.target.checked : e.target.value)
       .then((valid) => setErrors({ ...errors, [e.target.name]: "" }))
       .catch((error) => {
         setErrors({ ...errors, [e.target.name]: error.errors[0] });
@@ -108,7 +114,7 @@ const Registration = () => {
     axios
       .post("https://reqres.in/api/users", registration)
       .then((response) => {
-        //not sure what goes here
+        console.log(response)
       })
       .catch((err) => console.log(err));
   };
@@ -122,33 +128,33 @@ const Registration = () => {
         }}
       >
         <h3>Register To Find An awesome Food Truck</h3>
-        <label htmlFor="firstName">
+        <label htmlFor="first_name">
           First Name:
           <input
             type="text"
-            id="firstName"
-            name="firstName"
+            id="first_name"
+            name="first_name"
             placeholder="Enter Your First Name"
-            data-cy="firstName"
-            value={registration.firstName || ""}
+            data-cy="first_name"
+            value={registration.first_name || ""}
             onChange={handleChange}
           />
         </label>
-        <p style={{ color: "red", fontSize: ".8rem" }}>{errors.firstName}</p>
+        <p style={{ color: "red", fontSize: ".8rem" }}>{errors.first_name}</p>
 
-        <label htmlFor="lastName">
+        <label htmlFor="last_name">
           Last Name:
           <input
             type="text"
-            id="lastName"
-            name="lastName"
+            id="last_name"
+            name="last_name"
             placeholder="Enter Your Last Name"
-            data-cy="lastName"
-            value={registration.lastName || ""}
+            data-cy="last_name"
+            value={registration.last_name || ""}
             onChange={handleChange}
           />
         </label>
-        <p style={{ color: "red", fontSize: ".8rem" }}>{errors.lastName}</p>
+        <p style={{ color: "red", fontSize: ".8rem" }}>{errors.last_name}</p>
 
 
         <label htmlFor="email">
@@ -167,12 +173,12 @@ const Registration = () => {
 
 
         <label htmlFor="username">
-          Name:
+          Username:
           <input
             type="text"
             id="username"
             name="username"
-            placeholder="Enter your username"
+            placeholder="create a username"
             data-cy="username"
             value={registration.username || ""}
             onChange={handleChange}
@@ -197,12 +203,12 @@ const Registration = () => {
         <p style={{ color: "red", fontSize: ".8rem" }}>{errors.password}</p>
 
         
-        <label htmlFor="termsAndConditions">
+        <label htmlFor="termsAndConditions" className="termsAndConditions">
             <input
               type="checkbox"
+              id="termsAndConditions"
               name="termsAndConditions"
               checked={registration.termsAndConditions}
-              value={registration.termsAndConditions}
               data-cy="termsAndConditions"
               onChange={handleChange}
             />
@@ -211,6 +217,7 @@ const Registration = () => {
           <p style={{ color: "red", fontSize: ".8rem" }}>
             {errors.termsAndConditions}
           </p>
+    
           
         <button
           type="submit"
@@ -223,8 +230,8 @@ const Registration = () => {
         </button>
       </PrettyRegForm>
       
-        );
-      })}
+        
+    
     </div>
   );
 };

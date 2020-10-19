@@ -1,15 +1,12 @@
 import React from "react";
-import { Route } from "react-router-dom";
-import Registration from "./components/Registration";
-import Login from "./components/Login";
 import Navigation from "./components/Navigation";
+import Home from "./components/Home";
 
 function App() {
   return (
     <div className="App">
       <Navigation />
-      <Route exact path="/" component={Login} />
-      <Route path="/Registration" component={Registration} />
+      <Home />
     </div>
   );
 }
