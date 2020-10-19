@@ -7,7 +7,6 @@ import './form-styles.css';
 const  OperatorRegistration = () => {
     const formik = useFormik({
         initialValues: {
-            id: '',
             username: '',
             password: '',
             email: '',
@@ -42,9 +41,10 @@ const  OperatorRegistration = () => {
                 .label('Last name'),
         }),
         onSubmit: values => {
-            axios.post('https://reqres.in/api/register', values)
+            axios.post('https://build-week-food-truck.herokuapp.com/api/operator/register', values)
                 .then(res => {
-                    console.log('sg: operatorregistration.js: formik submit: AXIOS SUCESS: ', res)
+                    console.log('sg: operatorregistration.js: formik submit: AXIOS SUCESS: ', res);
+                    //localStorage.setItem('token', res.data.token);
                 })
                 .catch(err => {
                     console.error('There was an error registering: ', err)

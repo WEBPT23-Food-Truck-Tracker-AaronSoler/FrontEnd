@@ -23,11 +23,13 @@ const  OperatorLogin = () => {
                 .label('Password')
         }),
         onSubmit: (values) => {
-            axios.post('https://reqres.in/api/login', values)
+            axios.post('https://build-week-food-truck.herokuapp.com/api/operator/login', values)
                 .then(res => {
                     console.log('sg: operatorlogin.js : OperatorLogin : axios SUCESS : res', res)
                     localStorage.setItem('token', res.data.token)
-                    /* send to diner's profile page? */
+                    /* 
+                        send to diner's profile page? with res.data.message
+                    */
                 })
                 .catch(err => {
                     console.error('There was an error logging in: ', err)
