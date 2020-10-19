@@ -27,6 +27,7 @@ const Navigation = () => {
       <Link to="/login">Log In!</Link>
       <Link to="/registerOperator">Sign Up as Food Truck Operator</Link>
       <Link to="/loginOperator">Sign In as Food Truck Operator</Link>
+      <Link to="/marketing">About</Link>
       <Link to="/">Home</Link>
     </NavigationDiv>
   );
