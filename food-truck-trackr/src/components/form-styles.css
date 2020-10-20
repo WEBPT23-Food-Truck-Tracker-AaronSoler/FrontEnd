@@ -1,0 +1,34 @@
+form {
+    margin: 15px auto;
+    padding: 15px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid silver;
+}
+
+label {
+    margin: 10px 0;
+    width:300px;
+    display: flex;
+    justify-content: space-between;
+}
+
+input {
+    background: floralwhite;
+    border: 1px solid silver;
+}
+
+button {
+    width: 50%;
+    align-self: center;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+span {
+    display: block;
+    color: crimson;
+    font-weight: bold;
+    font-size: small;
+}
