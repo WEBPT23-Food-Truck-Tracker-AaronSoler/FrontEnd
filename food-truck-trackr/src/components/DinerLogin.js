@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import * as yup from "yup";
 import styled from "styled-components";
-import { getLocaton } from './api/getLocaton'
+import { dinerLocation } from './api/dinerLocation'
+import {wait} from 'react'
 
 const PrettyLoginForm = styled.form`
   display: flex;
@@ -47,12 +48,12 @@ const PrettyLoginForm = styled.form`
 
 
 
-const Login = () => {
+const DinerLogin = () => {
   const defaultLogin = {
-    id: "",
+    /* id: "", */
     username: "",
     password: "",
-    location: [],
+    location: {},
   };
 
   const schema = yup.object().shape({
@@ -74,7 +75,7 @@ const Login = () => {
     ...defaultLogin,
     username: "",
     password: "",
-    location: '',
+    location: {},
   });
 
   useEffect(() => {
@@ -85,7 +86,6 @@ const Login = () => {
 
   const validate = (e) => {
     e.persist();
-
     yup
       .reach(schema, e.target.name)
       .validate(e.target.value)
@@ -102,14 +102,15 @@ const Login = () => {
     validate(e);
   };
 
-  const LogIn = (e) => {
+  const LogIn = async (e) => {
     e.preventDefault();
-    //setLogin(defaultLogin);
+    const geodb_diner_location = await dinerLocation();
     axios
-      .post("https://build-week-food-truck.herokuapp.com/api/diner/login", login)
-      .then((response) => {
+      .post("https://build-week-food-truck.herokuapp.com/api/diner/login", {...login, location:geodb_diner_location})
+      .then((response) =>  {
         localStorage.setItem('token', response.data.token)
-        localStorage.setItem('dinerLocation:', getLocaton())
+       /*  localStorage.setItem('dinerLocation:', getLocaton()) */
+        console.log(response)
       })
       .catch((err) => console.log('There was an error logging in this diner: ', err));
   };
@@ -170,4 +171,4 @@ const Login = () => {
   );
 }
 
-export default Login;
+export default DinerLogin;
