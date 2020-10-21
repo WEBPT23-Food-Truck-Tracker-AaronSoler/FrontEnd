@@ -5,6 +5,7 @@ import DinerLogin from './components/DinerLogin';
 import DinerRegistration from './components/DinerRegistration';
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
+import DinerDashboard from './components/DinerDashboard';
 
 function App() {
   return (
@@ -23,8 +24,7 @@ function App() {
           Learn React
         </a>
       </header>
-      <DinerLogin />
-      <DinerRegistration />
+      <DinerDashboard />
       <Navigation />
       <Home />
     </div>

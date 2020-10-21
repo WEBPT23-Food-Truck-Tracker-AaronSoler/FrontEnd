@@ -3,7 +3,6 @@ import axios from "axios";
 import * as yup from "yup";
 import styled from "styled-components";
 import { dinerLocation } from './api/dinerLocation'
-import {wait} from 'react'
 
 const PrettyLoginForm = styled.form`
   display: flex;
@@ -46,8 +45,6 @@ const PrettyLoginForm = styled.form`
   }
 `;
 
-
-
 const DinerLogin = () => {
   const defaultLogin = {
     /* id: "", */
@@ -63,11 +60,6 @@ const DinerLogin = () => {
       .min(8)
       .required("enter a password with 8 characters minimum length"),
   });
-
-
-
-
-
 
   const [login, setLogin] = useState(defaultLogin);
   const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -109,13 +101,11 @@ const DinerLogin = () => {
       .post("https://build-week-food-truck.herokuapp.com/api/diner/login", {...login, location:geodb_diner_location})
       .then((response) =>  {
         localStorage.setItem('token', response.data.token)
-       /*  localStorage.setItem('dinerLocation:', getLocaton()) */
         console.log(response)
       })
       .catch((err) => console.log('There was an error logging in this diner: ', err));
   };
 
-  
   return (
     <div>
       <PrettyLoginForm
@@ -152,10 +142,7 @@ const DinerLogin = () => {
           />
         </label>
         <p style={{ color: "red", fontSize: ".8rem" }}>{errors.password}</p>
-
-        
-        
-          
+    
         <button
           type="submit"
           name="submit"

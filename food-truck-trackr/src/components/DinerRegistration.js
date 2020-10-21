@@ -54,7 +54,7 @@ const DinerRegistration = () => {
     email: "",
     username: "",
     password: "",
-   /*  termsAndConditions: false, */
+   /* termsAndConditions: false, */
   };
 
   const schema = yup.object().shape({
@@ -110,16 +110,15 @@ const DinerRegistration = () => {
 
   const addRegistration = (e) => {
     e.preventDefault();
-    /* setRegistration(defaultRegistration); */
     axios
       .post("https://build-week-food-truck.herokuapp.com/api/diner/register", registration)
       .then((response) => {
         console.log(response)
+        setRegistration(defaultRegistration); 
       })
       .catch((err) => console.log(err));
   };
 
-  
   return (
     <div>
       <PrettyRegForm
@@ -202,8 +201,8 @@ const DinerRegistration = () => {
         </label>
         <p style={{ color: "red", fontSize: ".8rem" }}>{errors.password}</p>
 
-        
-{/*         <label htmlFor="termsAndConditions" className="termsAndConditions">
+{/*         
+        <label htmlFor="termsAndConditions" className="termsAndConditions">
             <input
               type="checkbox"
               id="termsAndConditions"
