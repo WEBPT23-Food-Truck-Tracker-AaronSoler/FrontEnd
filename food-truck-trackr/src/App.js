@@ -24,7 +24,6 @@ function App() {
           Learn React
         </a>
       </header>
-      <DinerDashboard />
       <Navigation />
       <Home />
     </div>
