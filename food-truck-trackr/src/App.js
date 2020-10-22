@@ -20,7 +20,6 @@ function App() {
       <OperatorRegistration />
     </div>
   );
-  
 }
 
 const mapStateToProps = state => {
