@@ -13,7 +13,7 @@ const DinerDashboard = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        /* AXIOS send location data to retrieve local truck data */
+        /* AXIOS POST location data from props/store(?) to retrieve local truck data and setNearbyTrucks to this data */
     }
 
     return (
@@ -34,12 +34,23 @@ const DinerDashboard = () => {
                 </label>  
                 <button>Update List</button>
             </form>
-            
             <div>
                 list of nearby trucks....
             </div>
-            {/* <SearchTrucks /> */}
-            {/* <FaveTrucks /> */}
+            <section>
+                <h3>Crave a fave? Here's your list of favorites:</h3>
+                <p>Click on a truck for more information:</p>
+                <div>
+                    list of fave trucks here...with option to remove
+                </div>
+            </section>
+            <section>
+                <h3>Looking for something new?</h3>
+                <p>Click on a truck for more information:</p>
+                <div>
+                    list of all trucks on site here...with option to add to favorite
+                </div>
+            </section>
         </div>
     )
 }
