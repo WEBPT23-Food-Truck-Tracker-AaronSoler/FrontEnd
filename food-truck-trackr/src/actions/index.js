@@ -1,17 +1,25 @@
 import axios from 'axios';
-import { dinerLocation } from './api/dinerLocation'
+import { dinerLocation } from '../api/dinerLocation'
+import {useHistory} from 'react-router-dom'
 
 
-const ACTIONS = {
-    LOGIN_DINER_START: 'LOGIN_DINER_START',
+export const ACTIONS = {
+/* loading */
+    LOADING_START: 'LOGIN_DINER_START',
+    LOADING_END: 'LOGIN_DINER_END',
+/* DINER login */
     LOGIN_DINER_SUCCESS:'LOGIN_DINER_SUCCESS',
     LOGIN_DINER_ERROR:'LOGIN_DINER_ERROR',
+/* DINER register */
+    REGISTER_DINER_SUCCESS:'REGISTER_DINER_SUCCESS',
+    REGISTER_DINER_ERROR:'REGISTER_DINER_ERROR',
 }
 
-const loginDiner = async (dinerLoginData) => (dispatch) => {
-    dispatch({
-        type: ACTIONS.LOGIN_DINER_START
-    })
+export const loginDiner = (dinerLoginData) => async (dispatch) => {
+dispatch({
+        type: ACTIONS.LOADING_START,
+        payload: true
+    }) 
     const geodb_diner_location = await dinerLocation();
     axios
         .post("https://build-week-food-truck.herokuapp.com/api/diner/login", {...dinerLoginData, location:geodb_diner_location})
@@ -24,12 +32,12 @@ const loginDiner = async (dinerLoginData) => (dispatch) => {
             console.log('sg: actions - index.js: axios DINER LOGIN SUCCESS: ', response)
             /* redirect to DINER DASHBOARD */
         })
-        .catch((err) =>{
+        .catch((err) => {
             dispatch({
-                type: ACTIONS.LOGIN_DINER_FAIL,
+                type: ACTIONS.LOGIN_DINER_ERROR,
                 payload: err    
             })
-            console.log('There was an error logging in this diner: ', err)
+            console.error('There was an error logging in this diner: ', err.message)
         });
 
 }

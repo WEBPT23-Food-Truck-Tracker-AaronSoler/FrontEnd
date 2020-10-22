@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import * as yup from "yup";
 import styled from "styled-components";
 
@@ -44,12 +43,11 @@ const PrettyLoginForm = styled.form`
   }
 `;
 
-const DinerLogin = () => {
+const DinerLogin = ({loginDiner}) => {
   const defaultLogin = {
     /* id: "", */
     username: "",
     password: "",
-    location: {},
   };
 
   const schema = yup.object().shape({
@@ -66,7 +64,6 @@ const DinerLogin = () => {
     ...defaultLogin,
     username: "",
     password: "",
-    location: {},
   });
 
   useEffect(() => {
@@ -93,9 +90,9 @@ const DinerLogin = () => {
     validate(e);
   };
 
-  const LogIn = async (e) => {
+  const LogIn = (e) => {
     e.preventDefault();
-
+    loginDiner(login);
   };
 
   return (

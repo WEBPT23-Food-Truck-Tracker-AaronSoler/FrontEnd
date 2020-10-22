@@ -87,6 +87,8 @@ const DinerRegistration = () => {
     schema.isValid(registration).then((valid) => {
       setButtonDisabled(!valid);
     });
+
+    axios.get()
   }, [registration]);
 
   const validate = (e) => {
