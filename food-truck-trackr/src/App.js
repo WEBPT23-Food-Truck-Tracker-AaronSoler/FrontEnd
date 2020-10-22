@@ -19,6 +19,7 @@ function App() {
       <DinerRegistration />  
     </div>
   );
+  
 }
 
 export default App;
