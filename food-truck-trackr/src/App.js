@@ -5,7 +5,6 @@ import DinerRegistration from './components/DinerRegistration';
 import OperatorLogin from './components/OperatorLogin';
 import OperatorRegistration from './components/OperatorRegistration';
 import Navigation from "./components/Navigation";
-import Home from "./components/Home";
 import DinerDashboard from './components/DinerDashboard';
 import {connect} from 'react-redux'
 import { Route } from 'react-router-dom';

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import * as yup from "yup";
 import styled from "styled-components";
-import { dinerLocation } from './api/dinerLocation'
 
 const PrettyLoginForm = styled.form`
   display: flex;
@@ -96,14 +95,7 @@ const DinerLogin = () => {
 
   const LogIn = async (e) => {
     e.preventDefault();
-    const geodb_diner_location = await dinerLocation();
-    axios
-      .post("https://build-week-food-truck.herokuapp.com/api/diner/login", {...login, location:geodb_diner_location})
-      .then((response) =>  {
-        localStorage.setItem('token', response.data.token)
-        console.log(response)
-      })
-      .catch((err) => console.log('There was an error logging in this diner: ', err));
+
   };
 
   return (
