@@ -25,7 +25,7 @@ function App() {
         <Route  path="/register-operator" component={OperatorRegistration} />
         <Route  path="/login-operator" component={OperatorLogin} />
 
-    </div>
+    </div> 
   );
 }
 
