@@ -115,6 +115,7 @@ const DinerRegistration = () => {
       .then((response) => {
         console.log(response)
         setRegistration(defaultRegistration); 
+        /* redirect to login */
       })
       .catch((err) => console.log(err));
   };

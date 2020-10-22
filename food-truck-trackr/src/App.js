@@ -24,6 +24,8 @@ function App() {
           Learn React
         </a>
       </header>
+      <DinerLogin />
+      <DinerRegistration />
       <Navigation />
       <Home />
     </div>
