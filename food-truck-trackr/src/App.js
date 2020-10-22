@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import DinerLogin from './components/DinerLogin';
 import DinerRegistration from './components/DinerRegistration';
@@ -17,9 +16,18 @@ function App() {
       <Navigation />
       <DinerLogin />
       <DinerRegistration />  
+      <OperatorLogin />
+      <OperatorRegistration />
     </div>
   );
-  
 }
 
-export default App;
+const mapStateToProps = state => {
+  console.log(state);
+  return{
+    state: state
+  };
+};
+
+
+export default connect(mapStateToProps,{getSmurfs})(App);
