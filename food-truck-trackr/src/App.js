@@ -1,10 +1,11 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import OperatorLogin from './components/OperatorLogin';
-import OperatorRegistration from './components/OperatorRegistration';
+import DinerLogin from './components/DinerLogin';
+import DinerRegistration from './components/DinerRegistration';
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
+import DinerDashboard from './components/DinerDashboard';
 
 function App() {
   return (
@@ -23,8 +24,6 @@ function App() {
           Learn React
         </a>
       </header>
-      <OperatorLogin />
-      <OperatorRegistration />
       <Navigation />
       <Home />
     </div>
