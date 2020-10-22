@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import * as yup from "yup";
 import styled from "styled-components";
-import { getLocaton } from './api/getLocaton'
+import { dinerLocation } from './api/dinerLocation'
 
 const PrettyLoginForm = styled.form`
   display: flex;
@@ -45,14 +45,12 @@ const PrettyLoginForm = styled.form`
   }
 `;
 
-
-
-const Login = () => {
+const DinerLogin = () => {
   const defaultLogin = {
-    id: "",
+    /* id: "", */
     username: "",
     password: "",
-    location: [],
+    location: {},
   };
 
   const schema = yup.object().shape({
@@ -63,18 +61,13 @@ const Login = () => {
       .required("enter a password with 8 characters minimum length"),
   });
 
-
-
-
-
-
   const [login, setLogin] = useState(defaultLogin);
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [errors, setErrors] = useState({
     ...defaultLogin,
     username: "",
     password: "",
-    location: '',
+    location: {},
   });
 
   useEffect(() => {
@@ -85,7 +78,6 @@ const Login = () => {
 
   const validate = (e) => {
     e.persist();
-
     yup
       .reach(schema, e.target.name)
       .validate(e.target.value)
@@ -102,19 +94,18 @@ const Login = () => {
     validate(e);
   };
 
-  const LogIn = (e) => {
+  const LogIn = async (e) => {
     e.preventDefault();
-    //setLogin(defaultLogin);
+    const geodb_diner_location = await dinerLocation();
     axios
-      .post("https://build-week-food-truck.herokuapp.com/api/diner/login", login)
-      .then((response) => {
+      .post("https://build-week-food-truck.herokuapp.com/api/diner/login", {...login, location:geodb_diner_location})
+      .then((response) =>  {
         localStorage.setItem('token', response.data.token)
-        localStorage.setItem('dinerLocation:', getLocaton())
+        console.log(response)
       })
       .catch((err) => console.log('There was an error logging in this diner: ', err));
   };
 
-  
   return (
     <div>
       <PrettyLoginForm
@@ -151,10 +142,7 @@ const Login = () => {
           />
         </label>
         <p style={{ color: "red", fontSize: ".8rem" }}>{errors.password}</p>
-
-        
-        
-          
+    
         <button
           type="submit"
           name="submit"
@@ -170,4 +158,4 @@ const Login = () => {
   );
 }
 
-export default Login;
+export default DinerLogin;
