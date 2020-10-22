@@ -23,10 +23,11 @@ const Navigation = () => {
   return (
     
     <NavigationDiv>
-      <Link to="/register">SIGN UP</Link>
-      <Link to="/login">Log In!</Link>
-      <Link to="/registerOperator">Sign Up as Food Truck Operator</Link>
-      <Link to="/loginOperator">Sign In as Food Truck Operator</Link>
+      <Link to="/login-diner">LOGIN DINER</Link>
+      <Link to="/login-operator">LOGIN OPERATOR</Link>
+      <Link to="/register-diner">REGISTER DINER</Link>
+      <Link to="/register-operator">REGISTER OPERATOR</Link>
+      
       <Link to="/marketing">About</Link>
       <Link to="/">Home</Link>
     </NavigationDiv>

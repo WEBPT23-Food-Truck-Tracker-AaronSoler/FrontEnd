@@ -2,9 +2,13 @@ import React from 'react';
 import './App.css';
 import DinerLogin from './components/DinerLogin';
 import DinerRegistration from './components/DinerRegistration';
+import OperatorLogin from './components/OperatorLogin';
+import OperatorRegistration from './components/OperatorRegistration';
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
 import DinerDashboard from './components/DinerDashboard';
+import {connect} from 'react-redux'
+import { Route } from 'react-router-dom';
 
 function App() {
   return (
@@ -14,10 +18,13 @@ function App() {
         <p>Connecting foodies to food trucks in seconds!</p>
       </header>
       <Navigation />
-      <DinerLogin />
-      <DinerRegistration />  
-      <OperatorLogin />
-      <OperatorRegistration />
+
+          
+        <Route  path="/register-diner" component={DinerRegistration} />
+        <Route  path="/login-diner" component={DinerLogin} />
+        <Route  path="/register-operator" component={OperatorRegistration} />
+        <Route  path="/login-operator" component={OperatorLogin} />
+
     </div>
   );
 }
@@ -30,4 +37,4 @@ const mapStateToProps = state => {
 };
 
 
-export default connect(mapStateToProps,{getSmurfs})(App);
+export default connect(mapStateToProps,{ })(App);
