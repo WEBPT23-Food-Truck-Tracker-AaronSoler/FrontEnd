@@ -11,15 +11,17 @@ const PrettyLoginForm = styled.form`
   border-radius: 20px;
   border: 1px solid black;
   width: 600px;
-  background-color: lightgreen;
+  background-color: #DDAA00; 
   p {
     margin: 10px auto;
   }
   h3 {
     margin: 20px auto;
+    color: #A65111;
   }
   label {
     margin: 10px 30px;
+    color: black;
   }
   label input {
     margin-left: 10px;
@@ -36,12 +38,14 @@ const PrettyLoginForm = styled.form`
   button {
     padding: 10px;
     margin: 10px auto;
-    background: white;
+    background: #173F4E;
+    color: white;
     font-size: 1.2rem;
     :hover {
       opacity: 0.7;
     }
   }
+  
 `;
 
 
@@ -102,14 +106,28 @@ const Login = () => {
 
   const LogIn = (e) => {
     e.preventDefault();
-    setLogin(defaultLogin);
-    axios
-      .post("https://reqres.in/api/users", login)
-      .then((response) => {
-        console.log(response)
+    // setLogin(defaultLogin);
+    // axios
+    //   .post("https://reqres.in/api/users", login)
+    //   .then((response) => {
+    //     console.log(response)
+    //   })
+    //   .catch((err) => console.log(err));
+
+      axios
+      .post('https://build-week-food-truck.herokuapp.com/api/diner/login', e)
+      .then(res => {
+          console.log('sg: Login.js : Login : axios SUCCESS : res', res)
+          localStorage.setItem('token', res.data.token)
+          /* 
+              send to diner's profile page? with res.data.message
+          */
       })
-      .catch((err) => console.log(err));
-  };
+      .catch(err => {
+          console.error('There was an error logging in: ', err)
+
+      })
+  }
 
   
   return (

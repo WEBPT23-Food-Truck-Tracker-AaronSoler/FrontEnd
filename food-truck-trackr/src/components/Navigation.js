@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const NavigationDiv = styled.div`
   width: 100%;
-  background: orange;
+  background: #173F4E;
   display: flex;
   justify-content: flex-end;
   height: 4rem;
@@ -14,7 +14,7 @@ const NavigationDiv = styled.div`
   a {
     text-decoration: none;
     margin-right: 3%;
-    color: black;
+    color: #DDAA00;
     font-size: 1.4rem;
   }
 `;

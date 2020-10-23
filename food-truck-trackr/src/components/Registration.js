@@ -11,7 +11,7 @@ const PrettyRegForm = styled.form`
   border-radius: 20px;
   border: 1px solid black;
   width: 600px;
-  background-color: lightgreen;
+  background-color: #7C5D3D;
   p {
     margin: 10px auto;
   }
@@ -110,13 +110,21 @@ const Registration = () => {
 
   const addRegistration = (e) => {
     e.preventDefault();
-    setRegistration(defaultRegistration);
-    axios
-      .post("https://reqres.in/api/users", registration)
-      .then((response) => {
-        console.log(response)
-      })
-      .catch((err) => console.log(err));
+    // setRegistration(defaultRegistration);
+    // axios
+    //   .post("https://reqres.in/api/users", registration)
+    //   .then((response) => {
+    //     console.log(response)
+    //   })
+    //   .catch((err) => console.log(err));
+    axios.post('https://build-week-food-truck.herokuapp.com/api/diner/register', e)
+                .then(res => {
+                    console.log('sg: Registration.js: submit: AXIOS SUCCESS: ', res);
+                    //localStorage.setItem('token', res.data.token);
+                })
+                .catch(err => {
+                    console.error('There was an error registering: ', err)
+                })
   };
 
   
