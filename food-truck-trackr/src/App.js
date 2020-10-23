@@ -1,12 +1,19 @@
 import React, { useEffect } from 'react';
 import './App.css';
-import DinerLogin from './components/DinerLogin';
-import DinerRegistration from './components/DinerRegistration';
-import OperatorLogin from './components/OperatorLogin';
-import OperatorRegistration from './components/OperatorRegistration';
-import Navigation from "./components/Navigation";
 import {connect} from 'react-redux'
 import { Route } from 'react-router-dom';
+
+import Navigation from "./components/Navigation";
+import PrivateRoute from './components/PrivateRoute';
+
+import DinerLogin from './components/DinerLogin';
+import DinerRegistration from './components/DinerRegistration';
+
+import OperatorLogin from './components/OperatorLogin';
+import OperatorRegistration from './components/OperatorRegistration';
+import OperatorDashboard from './components/OperatorDashboard';
+
+
 
 import {getUsers, loginDiner, loginOperator} from './actions'
 
@@ -28,6 +35,8 @@ function App(props) {
       <Route  path="/login-diner" render={() => <DinerLogin loginDiner={props.loginDiner} />} />
       <Route  path="/register-operator" component={OperatorRegistration} />
       <Route  path="/login-operator" render={() => <OperatorLogin loginOperator={props.loginOperator} />} />
+      
+      <PrivateRoute path="/dashboard-operator" component={OperatorDashboard} />
 
     </div> 
   );
