@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import axios from 'axios';
 import './form-styles.css';
 
+const  OperatorLogin = (props) => {
 
-
-const  OperatorLogin = () => {
     const formik = useFormik({
         initialValues: {
             username: '',
@@ -23,17 +22,7 @@ const  OperatorLogin = () => {
                 .label('Password')
         }),
         onSubmit: (values) => {
-            axios.post('https://build-week-food-truck.herokuapp.com/api/operator/login', values)
-                .then(res => {
-                    console.log('sg: operatorlogin.js : OperatorLogin : axios SUCESS : res', res)
-                    localStorage.setItem('token', res.data.token)
-                    /* 
-                        send to diner's profile page? with res.data.message
-                    */
-                })
-                .catch(err => {
-                    console.error('There was an error logging in: ', err)
-                })
+           props.loginOperator(values)
         }
     })
 

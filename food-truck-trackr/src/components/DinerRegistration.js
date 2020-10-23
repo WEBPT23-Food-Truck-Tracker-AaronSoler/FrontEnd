@@ -46,7 +46,7 @@ const PrettyRegForm = styled.form`
 
 
 
-const DinerRegistration = () => {
+const DinerRegistration = (props) => {
   const defaultRegistration = {
    /*  id: "", */
     first_name: "",
@@ -87,6 +87,7 @@ const DinerRegistration = () => {
     schema.isValid(registration).then((valid) => {
       setButtonDisabled(!valid);
     });
+
   }, [registration]);
 
   const validate = (e) => {
@@ -114,8 +115,8 @@ const DinerRegistration = () => {
       .post("https://build-week-food-truck.herokuapp.com/api/diner/register", registration)
       .then((response) => {
         console.log(response)
-        setRegistration(defaultRegistration); 
-        /* redirect to login */
+        /* setRegistration(defaultRegistration); */ 
+        props.history.push('/login-diner')
       })
       .catch((err) => console.log(err));
   };

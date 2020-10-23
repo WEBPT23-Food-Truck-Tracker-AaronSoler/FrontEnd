@@ -2,6 +2,6 @@ const initialState = {
     msg: 'hello'
 }
 
-const mainReducer = (state = initialState, actions) => {
+const mainReducer = (state = initialState) => {
     return state;
 }

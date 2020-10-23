@@ -27,6 +27,9 @@ const Navigation = () => {
       <Link to="/login-operator">LOGIN OPERATOR</Link>
       <Link to="/register-diner">REGISTER DINER</Link>
       <Link to="/register-operator">REGISTER OPERATOR</Link>
+
+      {/* Private route testing */}
+      <Link to="/dashboard-operator">DASHBOARD OPERATOR</Link>
       
       <Link to="/marketing">About</Link>
       <Link to="/">Home</Link>

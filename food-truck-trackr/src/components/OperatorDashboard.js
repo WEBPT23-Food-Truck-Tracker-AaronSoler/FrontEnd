@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, {useState} from 'react';
+import {connect} from 'react-redux';
 
-const OperatorDashboard = () => {
+const OperatorDashboard = (props) => {
     return (
         <div>
             <h2>Welcome, Operator</h2>
@@ -14,4 +15,11 @@ const OperatorDashboard = () => {
     )
 }
 
-export default OperatorDashboard;
+const mapStateToProps = state => {
+    return {
+        allOperators: state.operator.allOperators,
+        operatorData: state.operator.operatorData
+    }
+}
+
+export default connect(mapStateToProps, {})(OperatorDashboard);
