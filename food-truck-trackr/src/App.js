@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import DinerLogin from './components/DinerLogin';
 import DinerRegistration from './components/DinerRegistration';
@@ -8,10 +8,14 @@ import Navigation from "./components/Navigation";
 import {connect} from 'react-redux'
 import { Route } from 'react-router-dom';
 
-import {loginDiner} from './actions'
-import { ErrorMessage } from 'formik';
+import {getUsers, loginDiner, loginOperator} from './actions'
 
 function App(props) {
+  
+  useEffect(() => {
+    props.getUsers()
+  }, [])
+
   return (
     <div className="App">
       <header className="App-header">
@@ -19,35 +23,25 @@ function App(props) {
         <p>Connecting foodies to food trucks in seconds!</p>
       </header>
       <Navigation />
-
-          
-        <Route  path="/register-diner" component={DinerRegistration} />
-        <Route  path="/login-diner" render={() => <DinerLogin loginDiner={props.loginDiner} />} />
-        <Route  path="/register-operator" component={OperatorRegistration} />
-        <Route  path="/login-operator" component={OperatorLogin} />
-      
-        <Route path='/error' render={() => <ErrorMessage error={props.error}/>} />
+      { props.error !== '' ? <p>There was an error: {props.error.message}</p> : null }
+      <Route  path="/register-diner" component={DinerRegistration} />
+      <Route  path="/login-diner" render={() => <DinerLogin loginDiner={props.loginDiner} />} />
+      <Route  path="/register-operator" component={OperatorRegistration} />
+      <Route  path="/login-operator" render={() => <OperatorLogin loginOperator={props.loginOperator} />} />
 
     </div> 
   );
 }
 
-
-const ErrorMessage = (props) => {
-  return(
-    <div>
-      <p>There was an error: {props.error.message}</p>
-    </div>
-  )
-}
-
 const mapStateToProps = state => {
   return {
-    dinerData: state.dinerData,
-    isLoading: state.isLoading,
-    error: state.error,
+    dinerData: state.diner.dinerData,
+    operatorData: state.operator.operatorData,
+    allOperators: state.operator.allOperators,
+    isLoading: state.diner.isLoading,
+    error: state.diner.error,
   };
 };
 
 
-export default connect(mapStateToProps,{loginDiner})(App);
+export default connect(mapStateToProps,{loginDiner, loginOperator, getUsers})(App);

@@ -43,7 +43,7 @@ const PrettyLoginForm = styled.form`
   }
 `;
 
-const DinerLogin = ({loginDiner}) => {
+const DinerLogin = (props) => {
   const defaultLogin = {
     /* id: "", */
     username: "",
@@ -92,7 +92,8 @@ const DinerLogin = ({loginDiner}) => {
 
   const LogIn = (e) => {
     e.preventDefault();
-    loginDiner(login);
+    props.loginDiner(login);
+    console.log(login)
   };
 
   return (

@@ -4,6 +4,7 @@ const initialState = {
     dinerData: {
         first_name:'',
         last_name:'',
+        username:'',
         current_location:{},
         email:'',
         id:''
