@@ -30,12 +30,15 @@ function App(props) {
         <p>Connecting foodies to food trucks in seconds!</p>
       </header>
       <Navigation />
+{/* DISPLAY ERROR IF PreSENT */}
       { props.error !== '' ? <p>There was an error: {props.error.message}</p> : null }
+
+{/* DINER ROUTES */}
       <Route  path="/register-diner" component={DinerRegistration} />
       <Route  path="/login-diner" render={() => <DinerLogin loginDiner={props.loginDiner} />} />
+{/* OPERATOR ROUTES */}
       <Route  path="/register-operator" component={OperatorRegistration} />
       <Route  path="/login-operator" render={() => <OperatorLogin loginOperator={props.loginOperator} />} />
-      
       <PrivateRoute path="/dashboard-operator" component={OperatorDashboard} />
 
     </div> 
