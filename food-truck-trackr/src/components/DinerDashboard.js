@@ -1,14 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
-import {getAllDiners} from '../actions/dinerActions';
+import {getDinerUserData} from '../actions/dinerActions';
 
 const DinerDashboard = (props) => {
-/* state should have logged in diner's data (including location) */    
+/* state should have logged in diner's data (including location) */ 
+
+const [user, setUser] = useState({...props.userData});   
 const [miles, setMiles] = useState('1');
 //const [nearbyTrucks, setNearbyTrucks] = useState([]) 
 
     useEffect(() => {
-        props.getAllDiners()
+        props.getDinerUserData(props.diner_id)
     }, [])
 
     //on change for miles away form/
@@ -63,10 +65,11 @@ const [miles, setMiles] = useState('1');
 
 const mapStateToProps = state => {
     return {
+        user_data: state.diner.userData,
         diner_id: state.diner.id,
         message: state.diner.message,
         all_diners: state.diner.allDiners
     }
 }
 
-export default connect(mapStateToProps,{getAllDiners})(DinerDashboard);
+export default connect(mapStateToProps,{getDinerUserData})(DinerDashboard);
