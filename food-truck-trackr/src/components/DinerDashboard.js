@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {getDinerUserData} from '../actions/dinerActions';
+import { axiosWithAuth } from '../api/axiosWithAuth';
 
 const DinerDashboard = (props) => {
 /* state should have logged in diner's data (including location) */ 
-
-//const [user, setUser] = useState({...props.userData});   
-const [miles, setMiles] = useState('1');
-//const [nearbyTrucks, setNearbyTrucks] = useState([]) 
+    const [miles, setMiles] = useState('1');
+    const [nearbyTrucks, setNearbyTrucks] = useState([]) 
 
     useEffect(() => {
         props.getDinerUserData(props.diner_id)
@@ -16,19 +15,24 @@ const [miles, setMiles] = useState('1');
     //on change for miles away form/
     const handleChange = (e) => {
         setMiles(e.target.value)
-        console.log(miles)
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        /* AXIOS POST location data from props/store(?) to retrieve local truck data and setNearbyTrucks to this data */
+        axiosWithAuth()
+            .get(`/restricted/diner/${props.diner_id}/dashboard?radius=${miles}&favorites=false`)
+            .then(res => {
+                console.log(res.data)
+                setNearbyTrucks(res.data)
+            })
+            .catch(err => console.log(err))
     }
 
     return (
         <div>
-            <h2>Welcome, Diner</h2>
+            <h2>Welcome, {props.first_name}!</h2>
             {/* <NearbyTrucks /> */}
-            <h3>Hungry? Here are some trucks nearby (LOCATION) right now:</h3>
+            <h3>Hungry? Here are some trucks nearby you right now:</h3>
             <form onSubmit={handleSubmit}>
                 <label> 
                     See trucks within 
@@ -43,7 +47,10 @@ const [miles, setMiles] = useState('1');
                 <button>Update List</button>
             </form>
             <div>
-                list of nearby trucks....
+                {nearbyTrucks.length === 0
+                    ? <p>Bummer, there no trucks within those miles radius of you.</p>
+                    : nearbyTrucks.map(truck => <p key={truck.id}>{truck.truck_name}</p>)
+                }
             </div>
             <section>
                 <h3>Crave a fave? Here's your list of favorites:</h3>
@@ -65,9 +72,13 @@ const [miles, setMiles] = useState('1');
 
 const mapStateToProps = state => {
     return {
+        first_name: state.diner.first_name,
         diner_id: state.diner.id,
+        current_location: state.diner.current_location,
         message: state.diner.message,
-        all_diners: state.diner.allDiners
+        all_diners: state.diner.allDiners,
+        is_loading: state.diner.isLoading,
+        has_error: state.diner.error
     }
 }
 
