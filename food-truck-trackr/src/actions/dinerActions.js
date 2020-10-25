@@ -39,8 +39,7 @@ export const getDinerUserData = (id) => (dispatch) => {
             console.log('getDinerUserData success: ', res.data.diners);
             const dinersArr = () => {
                 const arr = res.data.diners;
-                return arr.find(user => user.
-                id === id)
+                return arr.find(user => user.id === id)
             }
             dispatch({
                 type: GET_USER_SUCCESS,
