@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {getDinerUserData} from '../actions/dinerActions';
+import {logOut} from '../actions';
 import { axiosWithAuth } from '../api/axiosWithAuth';
 
 const DinerDashboard = (props) => {
@@ -28,8 +29,15 @@ const DinerDashboard = (props) => {
             .catch(err => console.log(err))
     }
 
+    const handleLogOut = (e) => {
+        e.preventDefault();
+        props.logOut();
+        props.history.push('/');
+    }
+
     return (
         <div>
+            <button onClick={handleLogOut}>Logout</button>
             <h2>Welcome, {props.first_name}!</h2>
             {/* <NearbyTrucks /> */}
             <h3>Hungry? Here are some trucks nearby you right now:</h3>
@@ -83,4 +91,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps,{getDinerUserData})(DinerDashboard);
+export default connect(mapStateToProps,{getDinerUserData, logOut})(DinerDashboard);

@@ -83,6 +83,8 @@ export const dinerReducer = (state = initialState, action) => {
                 isLoading: false,
                 error: action.payload,
             };
+        case ACTIONS.USER_LOGOUT:
+            return state;
         default:
             return state;       
     };

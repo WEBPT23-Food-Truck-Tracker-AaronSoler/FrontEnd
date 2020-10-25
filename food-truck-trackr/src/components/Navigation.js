@@ -31,7 +31,7 @@ const Navigation = () => {
       {/* Private route testing */}
       <Link to="/dashboard-operator">DASHBOARD OPERATOR</Link>
       
-      <a href='https://foodtrucktrackrr.netlify.app/about.html'>About</a>
+      <a href='https://foodtrucktrackrr.netlify.app/about.html' target='__blank'>About</a>
       <Link to="/">Home</Link>
     </NavigationDiv>
   );
