@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import * as yup from "yup";
 import styled from "styled-components";
+import {connect} from 'react-redux';
+
+import {loginDiner} from '../actions/'
 
 const PrettyLoginForm = styled.form`
   display: flex;
@@ -96,6 +99,12 @@ const DinerLogin = (props) => {
     console.log(login)
   };
 
+  useEffect(() => {
+    if (props.diner_id !== '') {
+      props.history.push('/dashboard-diner')
+    }
+  }, [props.diner_id])
+
   return (
     <div>
       <PrettyLoginForm
@@ -148,4 +157,10 @@ const DinerLogin = (props) => {
   );
 }
 
-export default DinerLogin;
+const mapStateToProps = state => {
+  return {
+    diner_id: state.diner.id,
+  }
+}
+
+export default connect(mapStateToProps, {loginDiner})(DinerLogin);

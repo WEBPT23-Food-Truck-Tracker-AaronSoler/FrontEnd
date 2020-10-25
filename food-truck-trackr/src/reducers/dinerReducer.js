@@ -1,16 +1,19 @@
 import { ACTIONS } from '../actions';
 
 const initialState = {
-    dinerData: {
-        first_name:'',
-        last_name:'',
-        username:'',
-        current_location:{},
-        email:'',
-        id:''
-    },
+    //logged in diner info
+    first_name:'',
+    last_name:'',
+    username:'',
+    password: '',
+    current_location:{},
+    email:'',
+    id:'',
+    //app status
     isLoading: false,
     error: '',
+    //all registered diners
+    allDiners: []
 };
 
 export const dinerReducer = (state = initialState, action) => {
@@ -19,12 +22,14 @@ export const dinerReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: true,
+                error: ''
             }
         case ACTIONS.LOGIN_DINER_SUCCESS:
             return {
                 ...state,
-                dinerData: {...action.payload},
+                ...action.payload,
                 isLoading: false,
+                error: ''
             };
         case ACTIONS.LOGIN_DINER_ERROR:
             return {

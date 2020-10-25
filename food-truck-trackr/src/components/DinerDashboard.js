@@ -1,11 +1,16 @@
-import axios from 'axios';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {getAllDiners} from '../actions/dinerActions'
 
 const DinerDashboard = () => {
-    /* state should have logged in diner's data (including location) */
-    const [miles, setMiles] = useState('1');
-    const [nearbyTrucks, setNearbyTrucks] = useState([])
-    
+/* state should have logged in diner's data (including location) */    
+const [miles, setMiles] = useState('1');
+//const [nearbyTrucks, setNearbyTrucks] = useState([]) 
+
+    useEffect(() => {
+        getAllDiners()
+    }, [])
+
+    //on change for miles away form/
     const handleChange = (e) => {
         setMiles(e.target.value)
         console.log(miles)
