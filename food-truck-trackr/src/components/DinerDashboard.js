@@ -41,6 +41,7 @@ const DinerDashboard = (props) => {
                         <option value={2}>1</option>
                         <option value={3}>1.5</option>
                         <option value={4}>2</option>
+                        <option value={100}>50</option>
                     </select>
                     miles of me.
                 </label>  
@@ -63,7 +64,7 @@ const DinerDashboard = (props) => {
                 <h3>Looking for something new?</h3>
                 <p>Click on a truck for more information:</p>
                 <div>
-                    list of all trucks on site here...with option to add to favorite
+                    lit of all trucks on site here...with option to add to sfavorite
                 </div>
             </section>
         </div>
