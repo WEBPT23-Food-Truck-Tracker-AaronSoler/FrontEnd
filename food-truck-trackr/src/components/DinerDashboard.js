@@ -1,11 +1,19 @@
-import axios from 'axios';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {getDinerUserData} from '../actions/dinerActions';
 
-const DinerDashboard = () => {
-    /* state should have logged in diner's data (including location) */
-    const [miles, setMiles] = useState('1');
-    const [nearbyTrucks, setNearbyTrucks] = useState([])
-    
+const DinerDashboard = (props) => {
+/* state should have logged in diner's data (including location) */ 
+
+//const [user, setUser] = useState({...props.userData});   
+const [miles, setMiles] = useState('1');
+//const [nearbyTrucks, setNearbyTrucks] = useState([]) 
+
+    useEffect(() => {
+        props.getDinerUserData(props.diner_id)
+    }, [])
+
+    //on change for miles away form/
     const handleChange = (e) => {
         setMiles(e.target.value)
         console.log(miles)
@@ -55,4 +63,12 @@ const DinerDashboard = () => {
     )
 }
 
-export default DinerDashboard;
+const mapStateToProps = state => {
+    return {
+        diner_id: state.diner.id,
+        message: state.diner.message,
+        all_diners: state.diner.allDiners
+    }
+}
+
+export default connect(mapStateToProps,{getDinerUserData})(DinerDashboard);
