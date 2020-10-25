@@ -14,7 +14,7 @@ import OperatorLogin from './components/OperatorLogin';
 import OperatorRegistration from './components/OperatorRegistration';
 import OperatorDashboard from './components/OperatorDashboard';
 
-import {loginDiner, loginOperator} from './actions'
+import {loginOperator} from './actions'
 
 function App(props) {
 
@@ -51,4 +51,4 @@ const mapStateToProps = state => {
 };
 
 
-export default connect(mapStateToProps,{loginDiner, loginOperator})(App);
+export default connect(mapStateToProps,{loginOperator})(App);

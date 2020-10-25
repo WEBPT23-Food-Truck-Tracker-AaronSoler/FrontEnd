@@ -1,4 +1,5 @@
 import { ACTIONS } from '../actions';
+import { GET_DINERS_FAIL, GET_DINERS_SUCCESS, GET_DINERS_START} from '../actions/dinerActions'
 
 const initialState = {
     //logged in diner info
@@ -32,6 +33,25 @@ export const dinerReducer = (state = initialState, action) => {
                 error: ''
             };
         case ACTIONS.LOGIN_DINER_ERROR:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
+        case GET_DINERS_START: 
+            return {
+                ...state,
+                isLoading: true,
+                error: ''
+            };
+        case GET_DINERS_SUCCESS:
+            return {
+                ...state,
+                allDiners: [...action.payload],
+                isLoading: false,
+                error: ''
+            };
+        case GET_DINERS_FAIL:
             return {
                 ...state,
                 isLoading: false,
