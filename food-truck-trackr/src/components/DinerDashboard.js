@@ -4,7 +4,8 @@ import {
     getDinerUserData, 
     getDinerFaves, 
     getAllTrucks,
-    addFaveTruck
+    addFaveTruck,
+    delFaveTruck
 } from '../actions/dinerActions';
 import {logOut} from '../actions';
 import { axiosWithAuth } from '../api/axiosWithAuth';
@@ -83,7 +84,20 @@ const DinerDashboard = (props) => {
                 <div>
                     {faveTrucks.length === 0 
                         ? <p>Aw, you have no favorites right now. Check out the list below to add some.</p>
-                    : faveTrucks.map(fave => <p>{fave.truck_name}</p>)}
+                    : faveTrucks.map(fave => {
+                        console.log(fave)
+                    return <p>
+                        {fave.truck_name}
+{/*                         <span 
+                            className='add-del-button'
+                            onClick={
+                                (e) =>
+                                props.delFaveTruck(props.diner_id, fave.id)}>
+                            Unfave
+                        </span> */}
+                    </p>
+                    })
+                    }
                 </div>
             </section>
             <section>
@@ -93,15 +107,14 @@ const DinerDashboard = (props) => {
                     {allTrucks.length === 0
                         ? <h5>Loading...</h5>
                         : allTrucks.map(truck => {
-                            return <div> 
-                                <p>{truck.truck_name} / {truck.cuisine_type}</p>
-                                <button 
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        props.addFaveTruck(props.diner_id, truck.id)}}>
-                                            Add to Favorites
-                                </button>
-                            </div>
+                            return <p>{truck.truck_name} / {truck.cuisine_type}
+                                <span className='add-del-button'
+                                    onClick={(e) =>
+                                        props.addFaveTruck(props.diner_id, truck.id)}>
+                                    Add Fave
+                                </span>
+                            </p>
+                           
                         })
                     }
                 </div>
@@ -124,4 +137,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps,{getDinerUserData, logOut, getDinerFaves, getAllTrucks, addFaveTruck})(DinerDashboard);
+export default connect(mapStateToProps,{getDinerUserData, logOut, getDinerFaves, getAllTrucks, addFaveTruck, delFaveTruck})(DinerDashboard);

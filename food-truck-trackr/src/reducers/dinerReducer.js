@@ -15,6 +15,9 @@ import {
     ADD_FAVE_START,
     ADD_FAVE_SUCCESS,
     ADD_FAVE_FAIL,
+    DEL_FAVE_START,
+    DEL_FAVE_SUCCESS,
+    DEL_FAVE_FAIL,
 } from '../actions/dinerActions'
 
 const initialState = {
@@ -146,6 +149,24 @@ export const dinerReducer = (state = initialState, action) => {
                 error: ''
             };
         case ADD_FAVE_FAIL:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
+        case DEL_FAVE_START: 
+            return {
+                ...state,
+                isLoading: true,
+                error: ''
+            };
+        case DEL_FAVE_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                error: ''
+            };
+        case DEL_FAVE_FAIL:
             return {
                 ...state,
                 isLoading: false,

@@ -21,6 +21,10 @@ export const ADD_FAVE_START = 'ADD_FAVE_START'
 export const ADD_FAVE_SUCCESS = 'ADD_FAVE_SUCCESS'
 export const ADD_FAVE_FAIL = 'ADD_FAVE_FAIL'
 
+export const DEL_FAVE_START = 'DEL_FAVE_START'
+export const DEL_FAVE_SUCCESS = 'DEL_FAVE_SUCCESS'
+export const DEL_FAVE_FAIL = 'DEL_FAVE_FAIL'
+
 export const getAllDiners = () => (dispatch) => {
     dispatch({
         type: GET_DINERS_START
@@ -111,16 +115,17 @@ export const getAllTrucks = (id) => (dispatch) => {
         })
 } 
 
-export const addFaveTruck = (dinerID, truckID) => (dispatch) => {
+export const addFaveTruck =  (dinerID, truckID) => (dispatch) => {
     dispatch({
         type: ADD_FAVE_START
     })
     axiosWithAuth()
         .post(`/restricted/diner/${dinerID}/favoritetrucks`, {truck_id: truckID})
-        .then(res => {
-            dispatch({
+        .then(res =>  {
+             dispatch({
                 type: ADD_FAVE_SUCCESS
-            })
+            });
+            getDinerFaves(dinerID);
             console.log('added fave truck!', res)
         })
         .catch(err => {
@@ -129,5 +134,25 @@ export const addFaveTruck = (dinerID, truckID) => (dispatch) => {
                 payload: err.message
             })
             console.error('error addind fave truck', err)
+        })
+}
+export const delFaveTruck = (dinerID, faveID) =>  (dispatch) => {
+    dispatch({
+        type: DEL_FAVE_START
+    })
+    axiosWithAuth()
+        .delete(`/restricted/diner/${dinerID}/favoritetrucks`, {favorite_id: faveID})
+        .then(res => {
+            dispatch({
+                type: DEL_FAVE_SUCCESS
+            })
+            console.log('delete fave truck!', res)
+        })
+        .catch(err => {
+            dispatch({
+                type: DEL_FAVE_FAIL,
+                payload: err.message
+            })
+            console.error('error deleting fave truck', err)
         })
 }
