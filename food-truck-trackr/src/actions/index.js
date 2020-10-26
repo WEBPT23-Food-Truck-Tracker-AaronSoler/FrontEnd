@@ -19,7 +19,7 @@ export const ACTIONS = {
     GET_USERS_ERROR: 'GET_USERS_ERROR',
 
 /* LOGOUT */
-    USER_LOGOUT: 'USER_LOGUT',
+    USER_LOGOUT: 'USER_LOGOUT',
 }
 
 export const loginDiner = (dinerLoginData) => async (dispatch) => {

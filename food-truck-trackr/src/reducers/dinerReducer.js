@@ -9,6 +9,9 @@ import {
     GET_FAVES_FAIL, 
     GET_FAVES_SUCCESS, 
     GET_FAVES_START,
+    GET_TRUCKS_FAIL, 
+    GET_TRUCKS_SUCCESS, 
+    GET_TRUCKS_START,
 } from '../actions/dinerActions'
 
 const initialState = {
@@ -25,7 +28,9 @@ const initialState = {
     isLoading: false,
     error: '',
     //all registered diners
-    allDiners: []
+    allDiners: [],
+    //trucks from seed
+    allTrucks: []
 };
 
 export const dinerReducer = (state = initialState, action) => {
@@ -101,6 +106,25 @@ export const dinerReducer = (state = initialState, action) => {
                 error: ''
             };
         case GET_FAVES_FAIL:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
+        case GET_TRUCKS_START: 
+            return {
+                ...state,
+                isLoading: true,
+                error: ''
+            };
+        case GET_TRUCKS_SUCCESS:
+            return {
+                ...state,
+                allTrucks: [...action.payload],
+                isLoading: false,
+                error: ''
+            };
+        case GET_TRUCKS_FAIL:
             return {
                 ...state,
                 isLoading: false,

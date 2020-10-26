@@ -9,9 +9,13 @@ export const GET_USER_START = 'GET_USER_START'
 export const GET_USER_SUCCESS = 'GET_USER_SUCCESS'
 export const GET_USER_FAIL = 'GET_USER_FAIL'
 
-export const GET_FAVES_START = 'GET_USER_START'
-export const GET_FAVES_SUCCESS = 'GET_USER_SUCCESS'
-export const GET_FAVES_FAIL = 'GET_USER_FAIL'
+export const GET_FAVES_START = 'GET_FAVES_START'
+export const GET_FAVES_SUCCESS = 'GET_FAVES_SUCCESS'
+export const GET_FAVES_FAIL = 'GET_FAVES_FAIL'
+
+export const GET_TRUCKS_START = 'GET_TRUCKS_START'
+export const GET_TRUCKS_SUCCESS = 'GET_TRUCKS_SUCCESS'
+export const GET_TRUCKS_FAIL = 'GET_TRUCKS_FAIL'
 
 export const getAllDiners = () => (dispatch) => {
     dispatch({
@@ -81,3 +85,24 @@ export const getDinerFaves = (id) => (dispatch) => {
             })
         })
 }
+
+export const getAllTrucks = (id) => (dispatch) => {
+    dispatch({
+        type: GET_TRUCKS_START,
+    })
+    axiosWithAuth().get(`/restricted/diner/${id}/dashboard?radius=1000`)
+        .then(res => {
+            console.log('gettrucks', res)
+            dispatch({
+                type: GET_TRUCKS_SUCCESS,
+                payload: res.data
+            })
+        })
+        .catch(err => {
+            console.error(err)
+            dispatch({
+                type: GET_TRUCKS_FAIL,
+                payload: err.message
+            });     
+        })
+} 

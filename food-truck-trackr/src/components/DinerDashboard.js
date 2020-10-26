@@ -1,6 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
-import {getDinerUserData, getDinerFaves} from '../actions/dinerActions';
+import {
+    getDinerUserData, 
+    getDinerFaves, 
+    getAllTrucks
+} from '../actions/dinerActions';
 import {logOut} from '../actions';
 import { axiosWithAuth } from '../api/axiosWithAuth';
 
@@ -8,14 +12,21 @@ const DinerDashboard = (props) => {
 /* state should have logged in diner's data (including location) */ 
     const [miles, setMiles] = useState('1');
     const [nearbyTrucks, setNearbyTrucks] = useState([]) 
-    const [faveTrucks, setFaveTrucks] = useState([...props.diner_faves]) 
+    const [faveTrucks, setFaveTrucks] = useState([]) 
+    const [allTrucks, setAllTrucks] = useState([])
 
     useEffect(() => {
         props.getDinerUserData(props.diner_id)
         props.getDinerFaves(props.diner_id)
-       // props.getAllTrucks(props.diner_id)
+       props.getAllTrucks(props.diner_id)
        console.log('favetrucks', faveTrucks)
     }, [])
+
+    useEffect(() => {
+        setAllTrucks(props.all_trucks);
+        setFaveTrucks(props.diner_faves)
+        console.log('use effect wit all trucks')
+    }, [props.all_trucks, props.diner_faves])
 
     //on change for miles away form/
     const handleChange = (e) => {
@@ -54,6 +65,7 @@ const DinerDashboard = (props) => {
                         <option value={3}>1.5</option>
                         <option value={4}>2</option>
                         <option value={100}>50</option>
+                        <option value={1000}>Any</option>
                     </select>
                     miles of me.
                 </label>  
@@ -61,8 +73,8 @@ const DinerDashboard = (props) => {
             </form>
             <div>
                 {nearbyTrucks.length === 0
-                    ? <p>Bummer, there no trucks within those miles radius of you.</p>
-                    : nearbyTrucks.map(truck => <p key={truck.id}>{truck.truck_name}</p>)
+                    ? <p>Bummer, there no trucks within those miles of you.</p>
+                    : nearbyTrucks.map(truck => <p key={truck.id}>{truck.truck_name} / {truck.cuisine_type}</p>)
                 }
             </div>
             <section>
@@ -70,14 +82,22 @@ const DinerDashboard = (props) => {
                 <div>
                     {faveTrucks.length === 0 
                         ? <p>Aw, you have no favorites right now. Check out the list below to add some.</p>
-                    : faveTrucks.map(fave => <p>{faveTrucks.truck_name}</p>)}
+                    : faveTrucks.map(fave => <p>{fave.truck_name}</p>)}
                 </div>
             </section>
             <section>
-                <h3>Looking for something new?</h3>
+                <h4>Looking for something new?</h4>
                 <p>Click on a truck for more information:</p>
                 <div>
-                    lit of all trucks on site here...with option to add to sfavorite
+                    {allTrucks.length === 0
+                        ? <p>Loading...</p>
+                        : allTrucks.map(truck => {
+                            return <div> 
+                                <p>{truck.truck_name} / {truck.cuisine_type}</p>
+                                <button>Add to Favorites</button>
+                            </div>
+                        })
+                    }
                 </div>
             </section>
         </div>
@@ -92,9 +112,10 @@ const mapStateToProps = state => {
         message: state.diner.message,
         diner_faves: state.diner.favorites,
         all_diners: state.diner.allDiners,
+        all_trucks: state.diner.allTrucks,
         isLoading: state.diner.isLoading,
         error: state.diner.error
     }
 }
 
-export default connect(mapStateToProps,{getDinerUserData, logOut, getDinerFaves})(DinerDashboard);
+export default connect(mapStateToProps,{getDinerUserData, logOut, getDinerFaves, getAllTrucks})(DinerDashboard);
