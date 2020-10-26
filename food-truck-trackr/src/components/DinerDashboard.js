@@ -67,7 +67,7 @@ const DinerDashboard = (props) => {
                         <option value={3}>1.5</option>
                         <option value={4}>2</option>
                         <option value={100}>50</option>
-                        <option value={1000}>Any</option>
+                        <option value={10000000}>Any</option>
                     </select>
                     miles of me.
                 </label>  
