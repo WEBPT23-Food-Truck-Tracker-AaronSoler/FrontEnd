@@ -12,6 +12,9 @@ import {
     GET_TRUCKS_FAIL, 
     GET_TRUCKS_SUCCESS, 
     GET_TRUCKS_START,
+    ADD_FAVE_START,
+    ADD_FAVE_SUCCESS,
+    ADD_FAVE_FAIL,
 } from '../actions/dinerActions'
 
 const initialState = {
@@ -130,8 +133,26 @@ export const dinerReducer = (state = initialState, action) => {
                 isLoading: false,
                 error: action.payload,
             };
+        case ADD_FAVE_START: 
+            return {
+                ...state,
+                isLoading: true,
+                error: ''
+            };
+        case ADD_FAVE_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                error: ''
+            };
+        case ADD_FAVE_FAIL:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
         case ACTIONS.USER_LOGOUT:
-            return state;
+            return initialState;
         default:
             return state;       
     };

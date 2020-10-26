@@ -3,7 +3,8 @@ import {connect} from 'react-redux';
 import {
     getDinerUserData, 
     getDinerFaves, 
-    getAllTrucks
+    getAllTrucks,
+    addFaveTruck
 } from '../actions/dinerActions';
 import {logOut} from '../actions';
 import { axiosWithAuth } from '../api/axiosWithAuth';
@@ -86,15 +87,20 @@ const DinerDashboard = (props) => {
                 </div>
             </section>
             <section>
-                <h4>Looking for something new?</h4>
-                <p>Click on a truck for more information:</p>
+                <h3>Looking for something new?</h3>
+                <p>Here are all the trucks registered with us. Why not make them a favorite for easy tracking?</p>
                 <div>
                     {allTrucks.length === 0
-                        ? <p>Loading...</p>
+                        ? <h5>Loading...</h5>
                         : allTrucks.map(truck => {
                             return <div> 
                                 <p>{truck.truck_name} / {truck.cuisine_type}</p>
-                                <button>Add to Favorites</button>
+                                <button 
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        props.addFaveTruck(props.diner_id, truck.id)}}>
+                                            Add to Favorites
+                                </button>
                             </div>
                         })
                     }
@@ -118,4 +124,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps,{getDinerUserData, logOut, getDinerFaves, getAllTrucks})(DinerDashboard);
+export default connect(mapStateToProps,{getDinerUserData, logOut, getDinerFaves, getAllTrucks, addFaveTruck})(DinerDashboard);

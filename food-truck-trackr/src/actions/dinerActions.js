@@ -17,6 +17,10 @@ export const GET_TRUCKS_START = 'GET_TRUCKS_START'
 export const GET_TRUCKS_SUCCESS = 'GET_TRUCKS_SUCCESS'
 export const GET_TRUCKS_FAIL = 'GET_TRUCKS_FAIL'
 
+export const ADD_FAVE_START = 'ADD_FAVE_START'
+export const ADD_FAVE_SUCCESS = 'ADD_FAVE_SUCCESS'
+export const ADD_FAVE_FAIL = 'ADD_FAVE_FAIL'
+
 export const getAllDiners = () => (dispatch) => {
     dispatch({
         type: GET_DINERS_START
@@ -106,3 +110,24 @@ export const getAllTrucks = (id) => (dispatch) => {
             });     
         })
 } 
+
+export const addFaveTruck = (dinerID, truckID) => (dispatch) => {
+    dispatch({
+        type: ADD_FAVE_START
+    })
+    axiosWithAuth()
+        .post(`/restricted/diner/${dinerID}/favoritetrucks`, {truck_id: truckID})
+        .then(res => {
+            dispatch({
+                type: ADD_FAVE_SUCCESS
+            })
+            console.log('added fave truck!', res)
+        })
+        .catch(err => {
+            dispatch({
+                type: ADD_FAVE_FAIL,
+                payload: err.message
+            })
+            console.error('error addind fave truck', err)
+        })
+}
