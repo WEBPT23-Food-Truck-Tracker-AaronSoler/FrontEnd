@@ -98,7 +98,7 @@ export const getAllTrucks = (id) => (dispatch) => {
     dispatch({
         type: GET_TRUCKS_START,
     })
-    axiosWithAuth().get(`/restricted/diner/${id}/dashboard?radius=1000`)
+    axiosWithAuth().get(`/restricted/diner/${id}/dashboard?radius=10000000`)
         .then(res => {
             console.log('gettrucks', res)
             dispatch({
