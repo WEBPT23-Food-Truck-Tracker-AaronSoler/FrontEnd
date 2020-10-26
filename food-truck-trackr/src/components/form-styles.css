@@ -32,3 +32,14 @@ span {
     font-weight: bold;
     font-size: small;
 }
+
+span.add-del-button {
+    display: inline-block;
+    background-color: black;
+    color: white;
+    min-width: 20px;
+    padding: 5px;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}

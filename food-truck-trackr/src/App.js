@@ -27,6 +27,7 @@ function App(props) {
       <Navigation />
 {/* DISPLAY ERROR IF PreSENT */}
       { props.error !== '' ? <p>There was an error: {props.error.message}</p> : null }
+      { props.isLoading === true ? <h2>Loading...</h2> : null }
 
 {/* DINER ROUTES */}
       <Route  path="/register-diner" component={DinerRegistration} />

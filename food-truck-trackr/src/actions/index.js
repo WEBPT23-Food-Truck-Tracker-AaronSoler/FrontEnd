@@ -16,7 +16,10 @@ export const ACTIONS = {
 
 /* ALL USERS fetch */
     GET_USERS_SUCCESS: 'GET_USERS_SUCCESS',
-    GET_USERS_ERROR: 'GET_USERS_ERROR'
+    GET_USERS_ERROR: 'GET_USERS_ERROR',
+
+/* LOGOUT */
+    USER_LOGOUT: 'USER_LOGOUT',
 }
 
 export const loginDiner = (dinerLoginData) => async (dispatch) => {
@@ -96,4 +99,11 @@ export const getUsers = () => (dispatch) => {
             })
             console.error('There was an error grabing the data location: ', err)            
         })
+}
+
+export const logOut = ()=> (dispatch) => {
+    dispatch({
+        type: ACTIONS.USER_LOGOUT
+    })
+    localStorage.removeItem('token');
 }
