@@ -6,6 +6,9 @@ import {
     GET_USER_FAIL, 
     GET_USER_SUCCESS, 
     GET_USER_START,
+    GET_FAVES_FAIL, 
+    GET_FAVES_SUCCESS, 
+    GET_FAVES_START,
 } from '../actions/dinerActions'
 
 const initialState = {
@@ -17,6 +20,7 @@ const initialState = {
     current_location:{},
     email:'',
     id:'',
+    favorites: [],
     //app status
     isLoading: false,
     error: '',
@@ -78,6 +82,25 @@ export const dinerReducer = (state = initialState, action) => {
                 error: ''
             };
         case GET_USER_FAIL:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
+        case GET_FAVES_START: 
+            return {
+                ...state,
+                isLoading: true,
+                error: ''
+            };
+        case GET_FAVES_SUCCESS:
+            return {
+                ...state,
+                favorites: [...action.payload],
+                isLoading: false,
+                error: ''
+            };
+        case GET_FAVES_FAIL:
             return {
                 ...state,
                 isLoading: false,

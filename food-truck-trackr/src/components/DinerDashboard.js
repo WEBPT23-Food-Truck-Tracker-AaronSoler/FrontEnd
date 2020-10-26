@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
-import {getDinerUserData} from '../actions/dinerActions';
+import {getDinerUserData, getDinerFaves} from '../actions/dinerActions';
 import {logOut} from '../actions';
 import { axiosWithAuth } from '../api/axiosWithAuth';
 
@@ -8,9 +8,13 @@ const DinerDashboard = (props) => {
 /* state should have logged in diner's data (including location) */ 
     const [miles, setMiles] = useState('1');
     const [nearbyTrucks, setNearbyTrucks] = useState([]) 
+    const [faveTrucks, setFaveTrucks] = useState([...props.diner_faves]) 
 
     useEffect(() => {
         props.getDinerUserData(props.diner_id)
+        props.getDinerFaves(props.diner_id)
+       // props.getAllTrucks(props.diner_id)
+       console.log('favetrucks', faveTrucks)
     }, [])
 
     //on change for miles away form/
@@ -63,9 +67,10 @@ const DinerDashboard = (props) => {
             </div>
             <section>
                 <h3>Crave a fave? Here's your list of favorites:</h3>
-                <p>Click on a truck for more information:</p>
                 <div>
-                    list of fave trucks here...with option to remove
+                    {faveTrucks.length === 0 
+                        ? <p>Aw, you have no favorites right now. Check out the list below to add some.</p>
+                    : faveTrucks.map(fave => <p>{faveTrucks.truck_name}</p>)}
                 </div>
             </section>
             <section>
@@ -85,10 +90,11 @@ const mapStateToProps = state => {
         diner_id: state.diner.id,
         current_location: state.diner.current_location,
         message: state.diner.message,
+        diner_faves: state.diner.favorites,
         all_diners: state.diner.allDiners,
-        is_loading: state.diner.isLoading,
-        has_error: state.diner.error
+        isLoading: state.diner.isLoading,
+        error: state.diner.error
     }
 }
 
-export default connect(mapStateToProps,{getDinerUserData, logOut})(DinerDashboard);
+export default connect(mapStateToProps,{getDinerUserData, logOut, getDinerFaves})(DinerDashboard);

@@ -9,6 +9,10 @@ export const GET_USER_START = 'GET_USER_START'
 export const GET_USER_SUCCESS = 'GET_USER_SUCCESS'
 export const GET_USER_FAIL = 'GET_USER_FAIL'
 
+export const GET_FAVES_START = 'GET_USER_START'
+export const GET_FAVES_SUCCESS = 'GET_USER_SUCCESS'
+export const GET_FAVES_FAIL = 'GET_USER_FAIL'
+
 export const getAllDiners = () => (dispatch) => {
     dispatch({
         type: GET_DINERS_START
@@ -54,3 +58,26 @@ export const getDinerUserData = (id) => (dispatch) => {
             });     
         })
 } 
+
+export const getDinerFaves = (id) => (dispatch) => {
+    dispatch({
+        type: GET_FAVES_START,
+        payload: true
+    })
+    axiosWithAuth()
+        .get(`/restricted/diner/${id}/favoritetrucks`)
+        .then(res => {
+            console.log('get diner faves success', res)
+            dispatch({
+                type: GET_FAVES_SUCCESS,
+                payload: res.data
+            })
+        })
+        .catch(err => {
+            console.error('get diner faves failure', err)
+            dispatch({
+                type: GET_FAVES_FAIL,
+                payload: err.message
+            })
+        })
+}
